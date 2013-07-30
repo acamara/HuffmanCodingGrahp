@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>637</width>
-    <height>319</height>
+    <width>651</width>
+    <height>371</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,14 +20,14 @@
       <item>
        <widget class="QLineEdit" name="lineEdit">
         <property name="text">
-         <string>36;14;13;12;10;9;4;2</string>
+         <string>0.36;0.14;0.13;0.12;0.10;0.09;0.04;0.02</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_graph">
+       <widget class="QPushButton" name="pushButton_generate">
         <property name="text">
-         <string>Graph</string>
+         <string>Generate</string>
         </property>
        </widget>
       </item>
@@ -74,8 +74,61 @@
            <number>75</number>
           </attribute>
           <attribute name="verticalHeaderVisible">
-           <bool>true</bool>
+           <bool>false</bool>
           </attribute>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_3">
+          <property name="styleSheet">
+           <string notr="true">font: 75 10pt &quot;Arial&quot;;</string>
+          </property>
+          <property name="text">
+           <string>Entropy:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_entropy">
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 10pt &quot;Arial&quot;;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_4">
+          <property name="styleSheet">
+           <string notr="true">font: 75 10pt &quot;Arial&quot;;</string>
+          </property>
+          <property name="text">
+           <string>Average length:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_averagelength">
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 10pt &quot;Arial&quot;;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string/>
+          </property>
          </widget>
         </item>
        </layout>
@@ -119,7 +172,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>637</width>
+     <width>651</width>
      <height>21</height>
     </rect>
    </property>

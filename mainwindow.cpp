@@ -1,8 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <iostream>
-#include <queue>
+#include <math.h>
 #include <QDebug>
 
 bool myLessThan( const Node *a, const Node *b )
@@ -40,6 +39,27 @@ void MainWindow::read_frequencys(){
     for (int i=0; i<slist.size(); i++) {
         lnodes.append(new Node(slist.at(i).toDouble()));
     }
+}
+
+void MainWindow::calculate_Entropy(){
+    double entropy = 0.00;
+    QStringList slist = ui->lineEdit->text().split(";");
+
+    for (int i=0; i<slist.size(); i++) {
+        entropy+=slist.at(i).toDouble()*log2(slist.at(i).toDouble());
+    }
+
+    ui->lineEdit_entropy->setText("H = "+QString::number(entropy*(-1))+" bits");
+}
+
+void MainWindow::calculate_AverageLength(){
+    double averagelength = 0.00;
+    QStringList slist = ui->lineEdit->text().split(";");
+
+    for (int i=0;i<slist.size();i++) {
+        averagelength+=slist.at(i).toDouble()*lcodes.at(i).size();
+    }
+    ui->lineEdit_averagelength->setText("R = "+QString::number(averagelength)+" bits");
 }
 
 void MainWindow::calculate(){
@@ -109,7 +129,7 @@ void MainWindow::paintTree(Node *root){
 void MainWindow::paintTreeRecur(Node *node, int k){
     if (node==NULL) return;
 
-    qDebug()<<"Freq: "<<node->freq<<" Nivell: "<<binarytree->getLevel(root,node->freq);
+    //qDebug()<<"Freq: "<<node->freq<<" Level: "<<binarytree->getLevel(root,node->freq);
 
     // it's a leaf
     if (node->left==NULL && node->right==NULL) {
@@ -137,7 +157,7 @@ void MainWindow::paintTreeRecur(Node *node, int k){
     }
 }
 
-void MainWindow::on_pushButton_graph_clicked()
+void MainWindow::on_pushButton_generate_clicked()
 {
     model->clear();
     model->setHorizontalHeaderItem(0, new QStandardItem(QString("Frequency")));
@@ -146,9 +166,12 @@ void MainWindow::on_pushButton_graph_clicked()
     lcodes.clear();
     lnodes.clear();
     scene->clear();
+
     read_frequencys();
+    calculate_Entropy();
     calculate();
     showCodes();
+    calculate_AverageLength();
     paintTree(root);
     //paintgraph();
 }

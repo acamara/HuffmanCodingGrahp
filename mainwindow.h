@@ -24,8 +24,10 @@ public:
     enum { max_node = 1000 };
 
 private slots:
-    void on_pushButton_graph_clicked();
+    void on_pushButton_generate_clicked();
     void calculate();
+    void calculate_Entropy();
+    void calculate_AverageLength();
     void read_frequencys();
     void getCodesRecur(Node *node, QString code);
     void showCodes();
