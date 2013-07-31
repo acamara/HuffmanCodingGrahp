@@ -66,7 +66,7 @@ void MainWindow::calculate(){
     while(lnodes.size()>1){
         qSort(lnodes.begin(), lnodes.end(), myLessThan );
         double mixfre=lnodes.at(0)->freq+lnodes.at(1)->freq;
-        //qDebug()<<"Nodes: "<<lnodes.at(0)->data<<" "<<lnodes.at(1)->data;
+        //qDebug()<<"Nodes: "<<lnodes.at(0)->freq<<" "<<lnodes.at(1)->freq;
         //qDebug()<<"Mix: "<<mixfre;
 
         root = new Node(mixfre);
@@ -80,7 +80,7 @@ void MainWindow::calculate(){
     }
 
     binarytree = new BinaryTree(root);
-    //binarytree->printPaths(root);
+    binarytree->printPaths(root);
 }
 
 void MainWindow::showCodes(){
@@ -112,11 +112,16 @@ void MainWindow::getCodesRecur(Node *node, QString code){
 }
 
 void MainWindow::paintTree(Node *root){
-    pen = QPen(Qt::red);
+    pen = QPen(Qt::black);
     pen.setWidth(2);
 
     freqpos =0;
     int k = 0;
+
+    leave[k] = new GraphElement(root->freq,0);
+    leave[k]->setPos(0,0);
+    scene->addItem(leave[k]);
+    k++;
 
     leave[k] = new GraphElement(root->freq,0);
     leave[k]->setPos(0,0);
@@ -129,7 +134,7 @@ void MainWindow::paintTree(Node *root){
 void MainWindow::paintTreeRecur(Node *node, int k){
     if (node==NULL) return;
 
-    //qDebug()<<"Freq: "<<node->freq<<" Level: "<<binarytree->getLevel(root,node->freq);
+    qDebug()<<"Freq: "<<node->freq<<" Level: "<<binarytree->getLevel(root,node->freq);
 
     // it's a leaf
     if (node->left==NULL && node->right==NULL) {
@@ -139,16 +144,14 @@ void MainWindow::paintTreeRecur(Node *node, int k){
     else {
     // otherwise try both subtrees
         leave[k] = new GraphElement(node->left->freq,0);
-        int ypos = binarytree->getLevel(root, node->left->freq)*72;
-        leave[k]->setPos(leave[k-1]->x()-128,ypos);
+        leave[k]->setPos(leave[k-1]->x(),leave[k-1]->y()+72);
         scene->addItem(leave[k]);
         scene->addLine(leave[k-1]->x()+32,leave[k-1]->y()+36,leave[k]->x()+32,leave[k]->y(),pen);
         k++;
         paintTreeRecur(node->left, k);
 
         leave[k] = new GraphElement(node->right->freq,0);
-        ypos = binarytree->getLevel(root, node->right->freq)*72;
-        leave[k]->setPos(leave[k-2]->x()+128,ypos);
+        leave[k]->setPos(leave[k-2]->x()+128,leave[k-1]->y());
         scene->addItem(leave[k]);
         scene->addLine(leave[k-2]->x()+32,leave[k-2]->y()+36,leave[k]->x()+32,leave[k]->y(),pen);
         k++;
@@ -173,5 +176,4 @@ void MainWindow::on_pushButton_generate_clicked()
     showCodes();
     calculate_AverageLength();
     paintTree(root);
-    //paintgraph();
 }
