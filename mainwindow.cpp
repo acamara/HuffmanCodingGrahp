@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     scene = new QGraphicsScene(this);
     ui->graphicsView->setScene(scene);
+    ui->graphicsView->setRenderHint(QPainter::Antialiasing, true);
 
     int ncol=2, nrow=4;
     model = new QStandardItemModel(nrow, ncol, this);
@@ -34,16 +35,16 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::read_frequencys(){
-    QStringList slist = ui->lineEdit->text().split(";");
+    slist = ui->lineEdit->text().split("/");
 
     for (int i=0; i<slist.size(); i++) {
         lnodes.append(new Node(slist.at(i).toDouble()));
     }
+    numfreq = slist.size();
 }
 
 void MainWindow::calculate_Entropy(){
     double entropy = 0.00;
-    QStringList slist = ui->lineEdit->text().split(";");
 
     for (int i=0; i<slist.size(); i++) {
         entropy+=slist.at(i).toDouble()*log2(slist.at(i).toDouble());
@@ -54,11 +55,11 @@ void MainWindow::calculate_Entropy(){
 
 void MainWindow::calculate_AverageLength(){
     double averagelength = 0.00;
-    QStringList slist = ui->lineEdit->text().split(";");
 
     for (int i=0;i<slist.size();i++) {
         averagelength+=slist.at(i).toDouble()*lcodes.at(i).size();
     }
+
     ui->lineEdit_averagelength->setText("R = "+QString::number(averagelength)+" bits");
 }
 
@@ -80,7 +81,7 @@ void MainWindow::calculate(){
     }
 
     binarytree = new BinaryTree(root);
-    binarytree->printPaths(root);
+    //binarytree->printPaths(root);
 }
 
 void MainWindow::showCodes(){
@@ -111,20 +112,26 @@ void MainWindow::getCodesRecur(Node *node, QString code){
     }
 }
 
+void MainWindow::preCalPosition(Node* node, int &col) {
+  if (node == NULL) return;
+  preCalPosition(node->left,col);
+  node->setColumn(col);
+  //qDebug()<< node->freq<<" col: "<<col;
+  col++;
+  preCalPosition(node->right,col);
+}
+
 void MainWindow::paintTree(Node *root){
+    int col = 0;
+    preCalPosition(root,col);
+
     pen = QPen(Qt::black);
-    pen.setWidth(2);
 
     freqpos =0;
     int k = 0;
 
     leave[k] = new GraphElement(root->freq,0);
-    leave[k]->setPos(0,0);
-    scene->addItem(leave[k]);
-    k++;
-
-    leave[k] = new GraphElement(root->freq,0);
-    leave[k]->setPos(0,0);
+    leave[k]->setPos(root->getColumn()*64,0);
     scene->addItem(leave[k]);
     k++;
 
@@ -134,36 +141,39 @@ void MainWindow::paintTree(Node *root){
 void MainWindow::paintTreeRecur(Node *node, int k){
     if (node==NULL) return;
 
-    qDebug()<<"Freq: "<<node->freq<<" Level: "<<binarytree->getLevel(root,node->freq);
+    //qDebug()<<"Freq: "<<node->freq<<" Column: "<<node->column;
 
     // it's a leaf
     if (node->left==NULL && node->right==NULL) {
+        //leave[k-1]->setPos(0,leave[k-1]->y());
         model->setItem(freqpos, 0, new QStandardItem(QString::number(node->freq)));
         freqpos++;
     }
     else {
     // otherwise try both subtrees
         leave[k] = new GraphElement(node->left->freq,0);
-        leave[k]->setPos(leave[k-1]->x(),leave[k-1]->y()+72);
+        //qDebug()<<"Freq: "<<node->left->freq<<"col: "<<node->left->getColumn();
+        leave[k]->setPos(node->left->getColumn()*64,leave[k-1]->y()+108);
         scene->addItem(leave[k]);
         scene->addLine(leave[k-1]->x()+32,leave[k-1]->y()+36,leave[k]->x()+32,leave[k]->y(),pen);
         k++;
         paintTreeRecur(node->left, k);
 
         leave[k] = new GraphElement(node->right->freq,0);
-        leave[k]->setPos(leave[k-2]->x()+128,leave[k-1]->y());
+        //qDebug()<<"Freq: "<<node->right->freq<<"col: "<<node->right->getColumn();
+        leave[k]->setPos(node->right->getColumn()*64,leave[k-1]->y());
         scene->addItem(leave[k]);
         scene->addLine(leave[k-2]->x()+32,leave[k-2]->y()+36,leave[k]->x()+32,leave[k]->y(),pen);
         k++;
-        //
         paintTreeRecur(node->right,k);
     }
 }
 
+
 void MainWindow::on_pushButton_generate_clicked()
 {
     model->clear();
-    model->setHorizontalHeaderItem(0, new QStandardItem(QString("Frequency")));
+    model->setHorizontalHeaderItem(0, new QStandardItem(QString("Probabilities")));
     model->setHorizontalHeaderItem(1, new QStandardItem(QString("Code")));
 
     lcodes.clear();

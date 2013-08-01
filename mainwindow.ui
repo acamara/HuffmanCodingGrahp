@@ -14,22 +14,43 @@
    <string>Huffman Encoding</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout_3">
+   <layout class="QVBoxLayout" name="verticalLayout_5">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
-       <widget class="QLineEdit" name="lineEdit">
+       <widget class="QLabel" name="label_6">
+        <property name="styleSheet">
+         <string notr="true">font: 11pt &quot;Arial&quot;;
+border-width: 2px;</string>
+        </property>
         <property name="text">
-         <string>0.36;0.14;0.13;0.12;0.10;0.09;0.04;0.02</string>
+         <string>Source probabilities</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_generate">
-        <property name="text">
-         <string>Generate</string>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLineEdit" name="lineEdit">
+          <property name="styleSheet">
+           <string notr="true">font: 10pt &quot;Trebuchet MS&quot;;</string>
+          </property>
+          <property name="text">
+           <string>0.36/0.14/0.13/0.12/0.10/0.09/0.04/0.02</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_generate">
+          <property name="styleSheet">
+           <string notr="true">font: 10pt &quot;Arial&quot;;</string>
+          </property>
+          <property name="text">
+           <string>Generate</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
@@ -41,12 +62,17 @@
          <widget class="QLabel" name="label_2">
           <property name="maximumSize">
            <size>
-            <width>200</width>
+            <width>150</width>
             <height>16777215</height>
            </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">font: 75 10pt &quot;Arial&quot;;</string>
+           <string notr="true">font: 10pt &quot;Arial&quot;;
+color: rgb(255, 255, 255);
+background-color: rgb(255, 170, 0);
+border-style: solid; 
+border-color:  rgb(255, 170, 0);
+border-width: 2px;</string>
           </property>
           <property name="text">
            <string>Huffman Encoding Table</string>
@@ -66,7 +92,7 @@
           </property>
           <property name="maximumSize">
            <size>
-            <width>200</width>
+            <width>153</width>
             <height>16777215</height>
            </size>
           </property>
@@ -80,8 +106,19 @@
         </item>
         <item>
          <widget class="QLabel" name="label_3">
+          <property name="maximumSize">
+           <size>
+            <width>150</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="styleSheet">
-           <string notr="true">font: 75 10pt &quot;Arial&quot;;</string>
+           <string notr="true">font: 10pt &quot;Arial&quot;;
+color: rgb(255, 255, 255);
+background-color: rgb(255,0,0);
+border-style: solid; 
+border-color:rgb(255,0, 0);
+border-width: 2px;</string>
           </property>
           <property name="text">
            <string>Entropy:</string>
@@ -92,7 +129,7 @@
          <widget class="QLineEdit" name="lineEdit_entropy">
           <property name="maximumSize">
            <size>
-            <width>200</width>
+            <width>150</width>
             <height>16777215</height>
            </size>
           </property>
@@ -103,8 +140,19 @@
         </item>
         <item>
          <widget class="QLabel" name="label_4">
+          <property name="maximumSize">
+           <size>
+            <width>150</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="styleSheet">
-           <string notr="true">font: 75 10pt &quot;Arial&quot;;</string>
+           <string notr="true">font: 10pt &quot;Arial&quot;;
+color: rgb(255, 255, 255);
+background-color: rgb(255,0,0);
+border-style: solid; 
+border-color:rgb(255,0, 0);
+border-width: 2px;</string>
           </property>
           <property name="text">
            <string>Average length:</string>
@@ -115,7 +163,7 @@
          <widget class="QLineEdit" name="lineEdit_averagelength">
           <property name="maximumSize">
            <size>
-            <width>200</width>
+            <width>150</width>
             <height>16777215</height>
            </size>
           </property>
@@ -138,7 +186,12 @@
         <item>
          <widget class="QLabel" name="label">
           <property name="styleSheet">
-           <string notr="true">font: 75 10pt &quot;Arial&quot;;</string>
+           <string notr="true">font: 10pt &quot;Arial&quot;;
+color: rgb(255, 255, 255);
+background-color: rgb(255, 170, 0);
+border-style: solid; 
+border-color:  rgb(255, 170, 0);
+border-width: 2px;</string>
           </property>
           <property name="text">
            <string>Huffman Encoding Tree</string>

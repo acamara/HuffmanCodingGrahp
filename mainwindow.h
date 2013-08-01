@@ -33,6 +33,7 @@ private slots:
     void showCodes();
     void paintTree(Node *root);
     void paintTreeRecur(Node *node, int k);
+    void preCalPosition(Node* node, int &col);
 
 private:
     Ui::MainWindow *ui;
@@ -40,6 +41,7 @@ private:
     QGraphicsLineItem *line[max_node];
     GraphElement *leave[max_node];
 
+    QStringList slist;
     QList<Node*> lnodes;
     QStringList lcodes;
     BinaryTree *binarytree;
@@ -48,6 +50,7 @@ private:
 
     QPen pen;
     int freqpos;
+    int numfreq;
 };
 
 #endif // MAINWINDOW_H

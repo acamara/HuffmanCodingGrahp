@@ -1,5 +1,5 @@
 #include "node.h"
-#include <iostream>
+#include <QDebug>
 
 Node::Node(){
     left = NULL;
@@ -21,6 +21,14 @@ Node::Node(double newData, int newCode) {
 
 void Node::setCode(int newCode){
     code = newCode;
+}
+
+void Node::setColumn(int newColumn){
+    column = newColumn;
+}
+
+int Node::getColumn(){
+    return column;
 }
 
 bool Node::operator <(const Node& n2)const
