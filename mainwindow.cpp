@@ -79,9 +79,6 @@ void MainWindow::calculate(){
         lnodes.removeFirst();
         lnodes.push_front(root);
     }
-
-    binarytree = new BinaryTree(root);
-    //binarytree->printPaths(root);
 }
 
 void MainWindow::showCodes(){
@@ -130,9 +127,9 @@ void MainWindow::paintTree(Node *root){
     freqpos =0;
     int k = 0;
 
-    leave[k] = new GraphElement(root->freq,0);
-    leave[k]->setPos(root->getColumn()*64,0);
-    scene->addItem(leave[k]);
+    leaves[k] = new GraphElement(root->freq,0);
+    leaves[k]->setPos(root->getColumn()*64,0);
+    scene->addItem(leaves[k]);
     k++;
 
     paintTreeRecur(root,k);
@@ -145,30 +142,37 @@ void MainWindow::paintTreeRecur(Node *node, int k){
 
     // it's a leaf
     if (node->left==NULL && node->right==NULL) {
-        //leave[k-1]->setPos(0,leave[k-1]->y());
+        //leaves[k-1]->setPos(0,leaves[k-1]->y());
         model->setItem(freqpos, 0, new QStandardItem(QString::number(node->freq)));
         freqpos++;
     }
     else {
     // otherwise try both subtrees
-        leave[k] = new GraphElement(node->left->freq,0);
+        leaves[k] = new GraphElement(node->left->freq,0);
         //qDebug()<<"Freq: "<<node->left->freq<<"col: "<<node->left->getColumn();
-        leave[k]->setPos(node->left->getColumn()*64,leave[k-1]->y()+108);
-        scene->addItem(leave[k]);
-        scene->addLine(leave[k-1]->x()+32,leave[k-1]->y()+36,leave[k]->x()+32,leave[k]->y(),pen);
+        leaves[k]->setPos(node->left->getColumn()*64,leaves[k-1]->y()+108);
+        scene->addItem(leaves[k]);
+        scene->addLine(leaves[k-1]->x()+32,leaves[k-1]->y()+36,leaves[k]->x()+32,leaves[k]->y(),pen);
+        QGraphicsTextItem *textItem = new QGraphicsTextItem(QString::number(node->left->code));
+        textItem->setFont(QFont("Arial", 11, QFont::Normal));
+        textItem->setPos((leaves[k-1]->x()+leaves[k]->x())/2.0,(leaves[k-1]->y()+leaves[k]->y())/2.0);
+        scene->addItem(textItem);
         k++;
         paintTreeRecur(node->left, k);
 
-        leave[k] = new GraphElement(node->right->freq,0);
+        leaves[k] = new GraphElement(node->right->freq,0);
         //qDebug()<<"Freq: "<<node->right->freq<<"col: "<<node->right->getColumn();
-        leave[k]->setPos(node->right->getColumn()*64,leave[k-1]->y());
-        scene->addItem(leave[k]);
-        scene->addLine(leave[k-2]->x()+32,leave[k-2]->y()+36,leave[k]->x()+32,leave[k]->y(),pen);
+        leaves[k]->setPos(node->right->getColumn()*64,leaves[k-1]->y());
+        scene->addItem(leaves[k]);
+        scene->addLine(leaves[k-2]->x()+32,leaves[k-2]->y()+36,leaves[k]->x()+32,leaves[k]->y(),pen);
+        textItem = new QGraphicsTextItem(QString::number(node->right->code));
+        textItem->setFont(QFont("Arial", 11, QFont::Normal));
+        textItem->setPos((leaves[k-2]->x()+leaves[k]->x()+96)/2.0,(leaves[k-2]->y()+leaves[k]->y())/2.0);
+        scene->addItem(textItem);
         k++;
         paintTreeRecur(node->right,k);
     }
 }
-
 
 void MainWindow::on_pushButton_generate_clicked()
 {

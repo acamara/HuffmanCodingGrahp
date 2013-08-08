@@ -15,12 +15,10 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     graphelement.cpp \
-    binarytree.cpp \
     node.cpp
 
 HEADERS  += mainwindow.h \
     graphelement.h \
-    binarytree.h \
     node.h
 
 FORMS    += mainwindow.ui

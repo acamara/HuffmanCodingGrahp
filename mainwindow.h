@@ -6,7 +6,6 @@
 #include <QGraphicsScene>
 #include <QStandardItemModel>
 
-#include "binarytree.h"
 #include "node.h"
 #include "graphelement.h"
 
@@ -38,13 +37,11 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
-    QGraphicsLineItem *line[max_node];
-    GraphElement *leave[max_node];
+    GraphElement *leaves[max_node];
 
     QStringList slist;
     QList<Node*> lnodes;
     QStringList lcodes;
-    BinaryTree *binarytree;
     Node *root;
     QStandardItemModel *model;
 
